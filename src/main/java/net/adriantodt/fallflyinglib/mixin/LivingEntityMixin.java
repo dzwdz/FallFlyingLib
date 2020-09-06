@@ -19,7 +19,10 @@ public abstract class LivingEntityMixin {
         boolean bl = accessor.callGetFlag(7);
 
         if (bl && !accessor.callIsOnGround() && !accessor.callHasVehicle()) {
-            return FallFlyingLibInternals.isFallFlyingAllowed((LivingEntity) (Object) this) || value;
+            value |= FallFlyingLibInternals.isFallFlyingAllowed((LivingEntity) (Object) this);
+        }
+        if (FallFlyingLibInternals.INITAI_OVERRIDE != null) {
+            value = FallFlyingLibInternals.INITAI_OVERRIDE.test((LivingEntity)(Object)this, value);
         }
         return value;
     }
